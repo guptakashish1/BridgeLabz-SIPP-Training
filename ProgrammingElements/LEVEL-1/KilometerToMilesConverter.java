@@ -1,5 +1,5 @@
 
-public class KilometerToMileConverter {
+public class KilometerToMilesConverter {
 
     public static void main(String[] args) {
         double distanceInKilometers = 10.8;
