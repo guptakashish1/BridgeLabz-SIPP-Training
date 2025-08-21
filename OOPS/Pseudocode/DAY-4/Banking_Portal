@@ -1,0 +1,59 @@
+CLASS Account
+    ATTRIBUTES:
+        accountNumber
+        holderName
+        balance
+
+    METHOD deposit(amount):
+        balance = balance + amount
+        PRINT "Deposited:", amount, "New Balance:", balance
+
+    METHOD withdraw(amount):       // Will be overridden
+        IF amount <= balance:
+            balance = balance - amount
+            PRINT "Withdrawn:", amount, "Remaining Balance:", balance
+        ELSE
+            PRINT "Insufficient Balance!"
+
+    METHOD displayBalance():
+        PRINT "Account:", accountNumber, "Holder:", holderName, "Balance:", balance
+END CLASS
+
+
+CLASS SavingAccount EXTENDS Account
+    ATTRIBUTES:
+        minBalance = 1000
+
+    METHOD withdraw(amount):    // Override
+        IF balance - amount >= minBalance:
+            balance = balance - amount
+            PRINT "Withdrawn from Saving:", amount, "Remaining Balance:", balance
+        ELSE
+            PRINT "Cannot withdraw! Minimum balance of", minBalance, "must be maintained."
+END CLASS
+
+
+CLASS CurrentAccount EXTENDS Account
+    ATTRIBUTES:
+        overdraftLimit = 5000
+
+    METHOD withdraw(amount):    // Override
+        IF amount <= balance + overdraftLimit:
+            balance = balance - amount
+            PRINT "Withdrawn from Current:", amount, "Remaining Balance:", balance
+        ELSE
+            PRINT "Withdrawal exceeds overdraft limit!"
+END CLASS
+
+
+// --- MAIN EXECUTION ---
+CREATE savingAcc = SavingAccount(accountNumber=101, holderName="Alice", balance=5000)
+CREATE currentAcc = CurrentAccount(accountNumber=202, holderName="Bob", balance=2000)
+
+savingAcc.displayBalance()
+savingAcc.withdraw(4500)    
+savingAcc.withdraw(3000)   
+
+currentAcc.displayBalance()
+currentAcc.withdraw(6000)   
+currentAcc.withdraw(8000)   

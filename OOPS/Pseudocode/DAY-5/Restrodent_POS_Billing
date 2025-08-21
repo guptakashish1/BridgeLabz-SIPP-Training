@@ -1,0 +1,118 @@
+import java.util.*;
+
+interface TaxCalculator {
+    double calculateTax(double amount);
+}
+
+class FoodTax implements TaxCalculator {
+    public double calculateTax(double amount) {
+        return amount * 0.05;
+    }
+}
+
+class BeverageTax implements TaxCalculator {
+    public double calculateTax(double amount) {
+        return amount * 0.12;
+    }
+}
+
+class ImportedTax implements TaxCalculator {
+    public double calculateTax(double amount) {
+        return amount * 0.05 + 50;
+    }
+}
+
+class LuxuryTax implements TaxCalculator {
+    public double calculateTax(double amount) {
+        return amount * 0.18;
+    }
+}
+
+interface DiscountPolicy {
+    double applyDiscount(double amount);
+}
+
+class NoDiscount implements DiscountPolicy {
+    public double applyDiscount(double amount) {
+        return amount;
+    }
+}
+
+class FlatDiscount implements DiscountPolicy {
+    public double applyDiscount(double amount) {
+        return amount - 100;
+    }
+}
+
+class PercentageDiscount implements DiscountPolicy {
+    public double applyDiscount(double amount) {
+        return amount * 0.90;
+    }
+}
+
+class BuyOneGetOne implements DiscountPolicy {
+    public double applyDiscount(double amount) {
+        return amount / 2;
+    }
+}
+
+class MenuItem {
+    String name;
+    double price;
+    TaxCalculator taxCalculator;
+
+    MenuItem(String name, double price, TaxCalculator taxCalculator) {
+        this.name = name;
+        this.price = price;
+        this.taxCalculator = taxCalculator;
+    }
+
+    double getTotalPrice() {
+        return price + taxCalculator.calculateTax(price);
+    }
+}
+
+class Bill {
+    List<MenuItem> items;
+    DiscountPolicy discountPolicy;
+
+    Bill(DiscountPolicy discountPolicy) {
+        items = new ArrayList<>();
+        this.discountPolicy = discountPolicy;
+    }
+
+    void addItem(MenuItem item) {
+        items.add(item);
+    }
+
+    double calculateFinalBill() {
+        double subtotal = 0;
+        for (MenuItem item : items) {
+            subtotal += item.getTotalPrice();
+        }
+        return discountPolicy.applyDiscount(subtotal);
+    }
+}
+
+public class RestaurantPOS {
+    public static void main(String[] args) {
+        MenuItem item1 = new MenuItem("Paneer Tikka", 300, new FoodTax());
+        MenuItem item2 = new MenuItem("Coke", 100, new BeverageTax());
+        MenuItem item3 = new MenuItem("Imported Cheese", 500, new ImportedTax());
+
+        Bill bill1 = new Bill(new PercentageDiscount());
+        bill1.addItem(item1);
+        bill1.addItem(item2);
+        bill1.addItem(item3);
+        System.out.println("Final Bill with 10% off: " + bill1.calculateFinalBill());
+
+        Bill bill2 = new Bill(new BuyOneGetOne());
+        bill2.addItem(new MenuItem("Pizza", 400, new FoodTax()));
+        bill2.addItem(new MenuItem("Pizza", 400, new FoodTax()));
+        System.out.println("Final Bill with BOGO: " + bill2.calculateFinalBill());
+
+        Bill bill3 = new Bill(new NoDiscount());
+        bill3.addItem(new MenuItem("Premium Wine", 2000, new LuxuryTax()));
+        System.out.println("Festival Bill with Luxury Tax: " + bill3.calculateFinalBill());
+    }
+}

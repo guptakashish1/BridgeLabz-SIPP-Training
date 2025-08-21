@@ -1,0 +1,39 @@
+class Customer
+    name
+    address
+
+class Restaurant
+    name
+    location
+
+class DeliveryBoy
+    name
+    contact
+
+class Order
+    customer : Customer
+    restaurant : Restaurant
+    deliveryBoy : DeliveryBoy
+    foodItem
+    price
+
+    constructor(customer, restaurant, deliveryBoy, foodItem, price)
+        this.customer = customer
+        this.restaurant = restaurant
+        this.deliveryBoy = deliveryBoy
+        this.foodItem = foodItem
+        this.price = price
+
+    method displayOrder()
+        print "Customer:", customer.name, "Address:", customer.address
+        print "Restaurant:", restaurant.name, "Location:", restaurant.location
+        print "Delivery Boy:", deliveryBoy.name, "Contact:", deliveryBoy.contact
+        print "Food Item:", foodItem, "Price:", price
+
+main
+    c = Customer("Alice", "Delhi")
+    r = Restaurant("SpicyBites", "Connaught Place")
+    d = DeliveryBoy("Raj", "9876543210")
+
+    order = new Order(c, r, d, "Pizza", 450)
+    order.displayOrder()

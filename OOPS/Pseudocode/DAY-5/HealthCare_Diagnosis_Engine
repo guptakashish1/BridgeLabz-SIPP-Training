@@ -1,0 +1,54 @@
+interface DiagnosisStrategy
+    method diagnose(symptoms : List<String>) -> List<String>
+
+class RuleBasedDiagnosis implements DiagnosisStrategy
+    method diagnose(symptoms)
+        if symptoms contain ("fever", "cough", "fatigue")
+            return ["Flu", "COVID-19"]
+        else
+            return ["Unknown (RuleBased)"]
+
+class AIBasedDiagnosis implements DiagnosisStrategy
+    method diagnose(symptoms)
+        if symptoms contain ("headache", "dizziness", "nausea")
+            return ["Migraine", "Vertigo"]
+        else
+            return ["Unknown (AI-Based)"]
+
+class ProbabilityBasedDiagnosis implements DiagnosisStrategy
+    method diagnose(symptoms)
+        return ["DiseaseX (70%)", "DiseaseY (30%)"]
+
+class DiagnosisContext
+    strategy : DiagnosisStrategy
+
+    method setStrategy(strategy)
+        this.strategy = strategy
+
+    method executeDiagnosis(symptoms)
+        return strategy.diagnose(symptoms)
+
+main
+    patient1Symptoms = ["fever", "cough", "fatigue"]
+    context = new DiagnosisContext()
+    context.setStrategy(new RuleBasedDiagnosis())
+    result1 = context.executeDiagnosis(patient1Symptoms)
+    print "General Medicine Diagnosis:", result1
+
+    patient2Symptoms = ["headache", "dizziness", "nausea"]
+    context.setStrategy(new AIBasedDiagnosis())
+    result2 = context.executeDiagnosis(patient2Symptoms)
+    print "Neurology Diagnosis:", result2
+
+    patient3Symptoms = ["chest pain", "shortness of breath"]
+    context.setStrategy(new ProbabilityBasedDiagnosis())
+    result3 = context.executeDiagnosis(patient3Symptoms)
+    print "Cardiology Diagnosis:", result3
+
+    context.setStrategy(new GeneticPatternDiagnosis())   // New strategy added tomorrow
+    result4 = context.executeDiagnosis(["geneX", "geneY"])
+    print "Genetic Diagnosis:", result4
+
+class GeneticPatternDiagnosis implements DiagnosisStrategy
+    method diagnose(symptoms)
+        return ["Genetic Disorder Prediction"]

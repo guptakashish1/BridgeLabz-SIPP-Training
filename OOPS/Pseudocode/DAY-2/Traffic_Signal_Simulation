@@ -1,0 +1,52 @@
+enum TrafficLight {
+    RED(5000),
+    GREEN(4000),
+    YELLOW(2000);
+
+    private int duration;
+
+    TrafficLight(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+}
+
+class TrafficSignalController {
+    private TrafficLight currentLight;
+
+    public TrafficSignalController() {
+        currentLight = TrafficLight.RED;
+    }
+
+    public void startSignal() throws InterruptedException {
+        while (true) {
+            System.out.println("Current Light: " + currentLight);
+            Thread.sleep(currentLight.getDuration());
+            switchLight();
+        }
+    }
+
+    private void switchLight() {
+        switch (currentLight) {
+            case RED:
+                currentLight = TrafficLight.GREEN;
+                break;
+            case GREEN:
+                currentLight = TrafficLight.YELLOW;
+                break;
+            case YELLOW:
+                currentLight = TrafficLight.RED;
+                break;
+        }
+    }
+}
+
+public class TrafficSignalDemo {
+    public static void main(String[] args) throws InterruptedException {
+        TrafficSignalController controller = new TrafficSignalController();
+        controller.startSignal();
+    }
+}

@@ -1,0 +1,34 @@
+
+abstract class Crop {
+    abstract void waterRequirement();
+    abstract void harvest();
+}
+
+class Rice extends Crop {
+    void waterRequirement() {
+        System.out.println("Rice requires high water supply");
+    }
+    void harvest() {
+        System.out.println("Harvesting rice in 4 months");
+    }
+}
+
+class Wheat extends Crop {
+    void waterRequirement() {
+        System.out.println("Wheat requires moderate water supply");
+    }
+    void harvest() {
+        System.out.println("Harvesting wheat in 5 months");
+    }
+}
+
+public class SmartFarmingSystem {
+    public static void main(String[] args) {
+        Crop c1 = new Rice();
+        Crop c2 = new Wheat();
+        c1.waterRequirement();
+        c1.harvest();
+        c2.waterRequirement();
+        c2.harvest();
+    }
+}

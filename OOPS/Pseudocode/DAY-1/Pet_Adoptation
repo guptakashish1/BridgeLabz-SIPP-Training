@@ -1,0 +1,32 @@
+Q1:- 1. Pet Adoption App
+○ Design classes for Pet, Dog, Cat, and Bird. Use inheritance and constructors
+to initialize them.
+
+Start
+Define 
+Class Pet
+ATTRIBUTES: name, age, color
+CONSTRUCTOR(name, age, color)
+SET this.name=name
+SET this.age=age
+SET this.color=color
+METHOD display()
+PRINT name, age, color
+
+CLASS Dog EXTENDS Pet
+ATTRIBUTE: breed
+CONSTRUCTOR: (name, age, color, breed)
+CALL super(name, age, color)
+SET this.breed = breed
+MAETHOD display()
+CALL super.display()
+PRINT breed
+
+CLASS Cat EXTENDS Pet
+    ATTRIBUTE: isIndoor
+    CONSTRUCTOR(name, age, color, isIndoor)
+        CALL super(name, age, color)
+        SET this.isIndoor = isIndoor
+    METHOD display()
+        CALL super.display()
+        PRINT "Indoor Cat: Yes" IF isIndoor ELSE "Indoor Cat: No"

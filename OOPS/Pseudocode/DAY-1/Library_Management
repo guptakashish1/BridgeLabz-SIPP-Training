@@ -1,0 +1,36 @@
+Q2:- Library Membership Tracker
+○ Create a class Member with attributes like name, ID, membership date. Add
+methods to check membership validity.
+
+CLASS Member
+ATTRIBUTE: name, memberID, membershipDate
+CONSTRUCTOR(name, memberID, membershipDate, validityInMonths)
+        SET this.name = name
+        SET this.memberID = memberID
+        SET this.membershipDate = membershipDate
+        SET this.validityInMonths = validityInMonths
+ METHOD isMembershipValid()
+        SET expiryDate = membershipDate + validityInMonths months
+        IF currentDate <= expiryDate
+            RETURN true
+        ELSE
+            RETURN false
+
+    METHOD display()
+        PRINT "Name: " + name
+        PRINT "Member ID: " + memberID
+        PRINT "Membership Date: " + membershipDate
+        PRINT "Valid till: " + (membershipDate + validityInMonths months)
+        IF isMembershipValid() == true
+            PRINT "Membership Status: Active"
+        ELSE
+            PRINT "Membership Status: Expired"
+
+MAIN PROGRAM
+    CREATE m1 = Member("Kashish Gupta", "LIB123", 2024-08-10, 12)
+    CREATE m2 = Member("Abhay ", "LIB456", 2023-05-15, 6)
+
+    PRINT " Library Member"
+    CALL m1.display()
+    CALL m2.display()
+

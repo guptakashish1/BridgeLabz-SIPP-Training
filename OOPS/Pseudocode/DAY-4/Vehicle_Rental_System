@@ -1,0 +1,93 @@
+INTERFACE Rentable
+    METHOD rent(duration)
+    METHOD returnVehicle()
+    METHOD calculateRent(duration)
+END INTERFACE
+
+
+ABSTRACT CLASS Vehicle IMPLEMENTS Rentable
+    ATTRIBUTES:
+        vehicleId
+        brand
+        model
+        rentPerHour
+        isAvailable = true
+
+    ABSTRACT METHOD rent(duration)         // To be implemented by subclasses
+    ABSTRACT METHOD returnVehicle()
+    ABSTRACT METHOD calculateRent(duration)
+
+    METHOD displayInfo():
+        PRINT "Vehicle:", brand, model, "Rent/hr:", rentPerHour, "Available:", isAvailable
+END CLASS
+
+
+CLASS Car EXTENDS Vehicle
+    ATTRIBUTES:
+        seatingCapacity
+
+    METHOD rent(duration):
+        IF isAvailable == true:
+            isAvailable = false
+            PRINT "Car rented for", duration, "hours."
+        ELSE
+            PRINT "Car not available!"
+
+    METHOD returnVehicle():
+        isAvailable = true
+        PRINT "Car returned."
+
+    METHOD calculateRent(duration):
+        RETURN duration * rentPerHour
+END CLASS
+
+
+CLASS Bike EXTENDS Vehicle
+    ATTRIBUTES:
+        type  
+
+    METHOD rent(duration):
+        IF isAvailable == true:
+            isAvailable = false
+            PRINT "Bike rented for", duration, "hours."
+        ELSE
+            PRINT "Bike not available!"
+
+    METHOD returnVehicle():
+        isAvailable = true
+        PRINT "Bike returned."
+
+    METHOD calculateRent(duration):
+        RETURN duration * rentPerHour
+END CLASS
+
+
+
+CLASS VehicleFactory
+    METHOD createVehicle(type, id, brand, model, rentPerHour):
+        IF type == "Car":
+            RETURN new Car(id, brand, model, rentPerHour)
+        ELSE IF type == "Bike":
+            RETURN new Bike(id, brand, model, rentPerHour)
+        ELSE
+            PRINT "Invalid vehicle type!"
+            RETURN null
+END CLASS
+
+
+// --- MAIN EXECUTION ---
+CREATE factory = VehicleFactory()
+
+car1 = factory.createVehicle("Car", 101, "Toyota", "Innova", 500)
+bike1 = factory.createVehicle("Bike", 201, "Yamaha", "R15", 200)
+
+car1.displayInfo()
+bike1.displayInfo()
+
+car1.rent(5)
+PRINT "Rent to pay:", car1.calculateRent(5)
+car1.returnVehicle()
+
+bike1.rent(3)
+PRINT "Rent to pay:", bike1.calculateRent(3)
+bike1.returnVehicle()

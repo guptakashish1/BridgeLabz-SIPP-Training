@@ -1,0 +1,48 @@
+interface Searchable
+    method search(keyword)
+
+interface Printable
+    method print()
+
+class PatientReport implements Searchable, Printable
+    patientName
+    diagnosis
+
+    constructor(name, diagnosis)
+        this.patientName = name
+        this.diagnosis = diagnosis
+
+    method search(keyword)
+        if keyword in patientName OR keyword in diagnosis
+            return true
+        else
+            return false
+
+    method print()
+        print "Patient Report:", patientName, diagnosis
+
+class LabReport implements Searchable, Printable
+    testName
+    result
+
+    constructor(testName, result)
+        this.testName = testName
+        this.result = result
+
+    method search(keyword)
+        if keyword in testName OR keyword in result
+            return true
+        else
+            return false
+
+    method print()
+        print "Lab Report:", testName, result
+
+main
+    reports = list of Searchable and Printable
+    add PatientReport("Alice", "Flu")
+    add LabReport("Blood Test", "Normal")
+
+    for each report in reports
+        if report.search("Flu")
+            report.print()
