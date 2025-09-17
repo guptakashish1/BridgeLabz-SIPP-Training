@@ -1,0 +1,20 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class NameUppercasing {
+    public static void main(String[] args) {
+        // Employee names
+        List<String> employees = Arrays.asList("Kashish", "Aman", "Riya", "Neha", "Saurabh");
+
+        System.out.println("=== Original Names ===");
+        employees.forEach(System.out::println);
+
+        // Convert to uppercase using method reference
+        List<String> upperNames = employees.stream()
+                                           .map(String::toUpperCase)   // method reference
+                                           .collect(Collectors.toList());
+
+        System.out.println("\n=== Uppercase Names for HR Letter ===");
+        upperNames.forEach(System.out::println);
+    }
+}
